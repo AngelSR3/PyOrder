@@ -1,12 +1,13 @@
 import json
+ruta_datos_usuarios = "Usuarios/Datos_Usuarios.json"
 
 def guardar_datos_usuarios(usuarios):
-    with open("Usuarios.json", "w") as archivo:
+    with open(ruta_datos_usuarios, "w") as archivo:
         json.dump(usuarios, archivo)
 
 def cargar_datos_usuarios():
     try:
-        with open("Usuarios.json", "r") as archivo:
+        with open(ruta_datos_usuarios, "r") as archivo:
             return json.load(archivo)
     except FileNotFoundError:
         return []
@@ -23,6 +24,9 @@ def agregar_usuario():
 def Usuario_Nuevo():
     usuarios = cargar_datos_usuarios()
 
+    if not usuarios:
+        usuarios = []
+
     while True:
         usuario = agregar_usuario()
         usuarios.append(usuario)
@@ -32,13 +36,20 @@ def Usuario_Nuevo():
         break
 
     print("Registrado correctamente.")
-    print("/////////////////////////////////////////////////////////////")
+    print("/////////////////////////////////////////////////////////////////////////////")
     r=int
     while r!=0:
-        print("Escriba 1 si desea adquirir un servicio.")
-        print("Escriba 2 si desea comprar un producto")
-        print("Escriba 3 si desea consultar servicios y promociones sugeridas.")
-        print("Escriba 4 si desea eliminar su cuenta.")
-        print("Escriba 5 si desea consultar los productos y servicios mas populares.")
+        print("/////////////////////////////////////////////////////////////////////////////")
+        print("Escriba 1 si desea comprar un producto o adquirir un servicio.")
+        print("Escriba 2 si desea consultar servicios y promociones sugeridas.")
+        print("Escriba 3 si desea eliminar su cuenta.")
+        print("Escriba 4 si desea consultar los productos y servicios mas populares.")
         print("Escriba 0 si desea cerrar sesion y volver al menu principla.")
         r=int(input())
+        print("/////////////////////////////////////////////////////////////////////////////")
+        r=int(input("->"))
+    if r==1:
+        print("")
+    else:
+        print("Respuesta invalida")
+        r=int
