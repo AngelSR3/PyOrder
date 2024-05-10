@@ -1,19 +1,26 @@
 import json
-def mostrar_productos_servicios():
-    with open('Productos_y_Servicios/PyS.json', 'r') as file:
+
+def cargar_datos(archivo):
+    with open(archivo, "r") as file:
         datos = json.load(file)
-        print(datos)
-        print("Productos Disponibles:")
-        for producto, detalles in datos["Productos"].items():
-            print(f"{producto}: {detalles['Precio']}")
-        print("\nServicios Disponibles:")
-        for servicio, precio in datos["Servicios"].items():
-            print(f"{servicio}: {precio}")
+    return datos
+        
+def guardar_datos(datos, archivo):
+    with open(archivo, "w") as file:
+        json.dump(datos, file, indent=4)
+
+def mostrar_productos_servicios():
+    datos = cargar_datos('Productos_y_Servicios/PyS.json')
+    print("Productos Disponibles:")
+    for producto, detalles in datos["Productos"].items():
+        print(f"{producto}: {detalles['Precio']}")
+    print("\nServicios Disponibles:")
+    for servicio, precio in datos["Servicios"].items():
+        print(f"{servicio}: {precio}")
 
 def comprar_producto_servicio(usuario, eleccion, cantidad=1):
     # Cargar los datos de usuarios
-    with open('Usuarios/Datos_Usuarios.json', 'r') as file:
-        usuarios = json.load(file)
+    usuarios = cargar_datos('Usuarios/Datos_Usuarios.json')
 
     # Actualizar datos del usuario
     for user in usuarios:
@@ -25,28 +32,43 @@ def comprar_producto_servicio(usuario, eleccion, cantidad=1):
                 user[eleccion] = cantidad
 
     # Guardar los datos actualizados
-    with open('Usuarios/Datos_Usuarios.json', 'w') as file:
-        json.dump(usuarios, file)
+    guardar_datos(usuarios, 'Usuarios/Datos_Usuarios.json')
 
     # Registrar la compra en el contador
     with open('Productos_y_Servicios/PyS.json', 'r+') as file:
-        data = json.load(file)
-        if eleccion in data["Productos"]:
-            if "Productos Populares" in data:
-                if eleccion in data["Productos Populares"]:
-                    data["Productos Populares"][eleccion] += cantidad
+        datos = json.load(file)
+        seccion = None
+        if eleccion in datos["Productos"]:
+            seccion = "Productos Populares"
+        else:
+            for categoria, servicios in datos["Servicios"].items():
+                if eleccion in servicios:
+                    seccion = "Servicios Populares"
+                    break
+
+        if seccion:
+            if seccion in datos:
+                if eleccion in datos[seccion]:
+                    datos[seccion][eleccion] += cantidad
                 else:
-                    data["Productos Populares"][eleccion] = cantidad
+                    datos[seccion][eleccion] = cantidad
             else:
-                data["Productos Populares"] = {eleccion: cantidad}
-        elif eleccion in data["Servicios"]:
-            if "Servicios Populares" in data:
-                if eleccion in data["Servicios Populares"]:
-                    data["Servicios Populares"][eleccion] += cantidad
-                else:
-                    data["Servicios Populares"][eleccion] = cantidad
-            else:
-                data["Servicios Populares"] = {eleccion: cantidad}
-        
+                datos[seccion] = {eleccion: cantidad}
+
         # Escribir los datos actualizados
-        json.dump(data, file)
+        guardar_datos(datos, 'Productos_y_Servicios/PyS.json')
+def ofrecer_promocion(nombre_usuario):
+    # Cargar los datos de promociones
+    promociones = cargar_datos('Productos_y_Servicios/PyS.json')
+    # Obtener el tipo de usuario
+    tipo_usuario = ""
+    promos={}
+    promos=promociones["Promociones"]
+    if "PromoInicial" in promos["Nuevos"]:
+        print(promos["Nuevos"]["PromoInicial"])
+    elif "PromoRegular" in promos["Regulares"]:
+        print(promos["Regulares"]["PromoRegular"])
+    elif "PromoReales" in promos["Leales"]:
+        print(promos["Leales"]["PromoReales"])
+
+

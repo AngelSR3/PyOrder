@@ -16,12 +16,20 @@ while r != 0:
     
     r = int(input("->"))
     if r == 1:
-        r= Usuario_Nuevo()
+        Usuario_Nuevo()
+        r=menu_usuario()
         if r==1:
             mostrar_productos_servicios()
-            usuario=input("Ingrese su nombre de usuario")
-            eleccion=input("Ingrese el nombre exacto del producto o servicio que desea adquirir")
+            usuario=input("Ingrese su nombre de usuario: ").title()
+            eleccion=input("Ingrese el nombre exacto del producto o servicio que desea adquirir, o si desea salir escriba 'salir': ").title()
+            if eleccion=="salir":
+                break
             comprar_producto_servicio(usuario, eleccion)
+            print("Compra exitosa")
+            input("Presione enter para ir al menu principal.")
+        if r==2:
+            datos=cargar_datos("Productos_y_Servicios/PyS.json")
+            ofrecer_promocion(datos)
     else:
         print("Respuesta invalida")
         r = int(0)  
