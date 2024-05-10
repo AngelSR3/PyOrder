@@ -34,22 +34,20 @@ def Usuario_Nuevo():
         guardar_datos_usuarios(usuarios)
 
         break
-
     print("Registrado correctamente.")
     print("/////////////////////////////////////////////////////////////////////////////")
-    r=int
-    while r!=0:
+    r = -1
+    while r != 0:
         print("/////////////////////////////////////////////////////////////////////////////")
         print("Escriba 1 si desea comprar un producto o adquirir un servicio.")
         print("Escriba 2 si desea consultar servicios y promociones sugeridas.")
         print("Escriba 3 si desea eliminar su cuenta.")
         print("Escriba 4 si desea consultar los productos y servicios mas populares.")
         print("Escriba 0 si desea cerrar sesion y volver al menu principla.")
-        r=int(input())
+        r = int(input("->"))
         print("/////////////////////////////////////////////////////////////////////////////")
-        r=int(input("->"))
-    if r==1:
-        print("")
-    else:
-        print("Respuesta invalida")
-        r=int
+        if r == 1:
+            return r
+        else:
+            print("Respuesta invalida")
+    return r
