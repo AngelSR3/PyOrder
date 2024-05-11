@@ -60,15 +60,23 @@ def comprar_producto_servicio(usuario, eleccion, cantidad=1):
 def ofrecer_promocion(nombre_usuario):
     # Cargar los datos de promociones
     promociones = cargar_datos('Productos_y_Servicios/PyS.json')
-    # Obtener el tipo de usuario
-    tipo_usuario = ""
+    tipo_usuario= cargar_datos('Usuarios/Datos_Usuarios.json')
+    
     promos={}
     promos=promociones["Promociones"]
-    if "PromoInicial" in promos["Nuevos"]:
-        print(promos["Nuevos"]["PromoInicial"])
-    elif "PromoRegular" in promos["Regulares"]:
-        print(promos["Regulares"]["PromoRegular"])
-    elif "PromoReales" in promos["Leales"]:
-        print(promos["Leales"]["PromoReales"])
+    lista = list(tipo_usuario)
+    for i in range(len(lista)):
+        
+        if nombre_usuario == lista[i]["Nombre"]:
 
+            if "Nuevos" == lista[i]["Tipo_usuario"]:
+                oferta=(promos["Nuevos"]["PromoInicial"])
+                return oferta
+            elif "Regulares" == lista[i]["Tipo_usuario"]:
+                oferta=(promos["Regulares"]["PromoRegular"])
+                return oferta
+            elif "Leales" == lista[i]["Tipo_usuario"]:
+                oferta=(promos["Leales"]["PromoReales"])
+                return oferta
+    return "Usuario no registrado"
 

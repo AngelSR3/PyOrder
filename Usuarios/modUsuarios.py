@@ -18,7 +18,8 @@ def agregar_usuario():
     usuario["Nombre"] = input("Primer nombre: ").title()
     usuario["Direccion"] = input("Direccion: ").title()
     usuario["Contacto"] = input("Telefono de contacto: ")
-    usuario["Tipo_usuario"]="Leal"
+    usuario["Id"] = input("Documento de ID: ")
+    usuario["Tipo_usuario"]="Nuevos"
     return usuario
 
 def Usuario_Nuevo():
@@ -35,6 +36,7 @@ def Usuario_Nuevo():
 
         break
     print("Registrado correctamente.")
+    input("Presione enter para volver al menu principal.")
     print("/////////////////////////////////////////////////////////////////////////////")
     r = -1
 def menu_usuario():
@@ -43,16 +45,55 @@ def menu_usuario():
         print("/////////////////////////////////////////////////////////////////////////////")
         print("Escriba 1 si desea comprar un producto o adquirir un servicio.")
         print("Escriba 2 si desea consultar servicios y promociones sugeridas.")
-        print("Escriba 3 si desea ver la informacion de su cuenta.")
+        print("Escriba 3 si desea actualizar la informacion de su cuenta.")
         print("Escriba 4 si desea eliminar su cuenta.")
-        print("Escriba 5 si desea consultar los productos y servicios mas populares.")
-        print("Escriba 0 si desea cerrar sesion y volver al menu principla.")
+        print("Escriba 0 si desea cerrar sesion y volver al menu principal.")
         r = int(input("->"))
         print("/////////////////////////////////////////////////////////////////////////////")
         if r == 1:
             return r
         elif r == 2:
             return r
+        elif r == 3:
+            return r
         else:
             print("Respuesta invalida")
     return r
+def actualizar_usuario(datos:dict):
+    id =input("Ingrese el documento del cliente a remplazar: ")
+    for i in range(len(datos)):
+        if datos[i]["Id"]== id:
+
+
+            while True:
+                print("¿que te gustaria cambiar?")
+                print("(1) para modificar el nombre: ")
+                print("(2) para modificar el documento: ")
+                print("(3) para modificar la direccion: ")
+                print("(4) para modificar el contacto: ")
+                print("(0) para salir ")
+                opc=input("ingrese la opcion: ")
+
+
+
+
+                if opc=="1":
+                    datos[i]["Nombre"]= input("ingrese el nuevo nombre: ")
+                    print("se guardo con exito")
+                    print("/////////////////////////////////////////////////////////////")
+                elif opc== "2":
+                    datos[i]["Id"]=input("ingrese el nuevo documento: ")
+                    print("se guardo con exito")
+                    print("/////////////////////////////////////////////////////////////")
+                elif opc=="3":
+                    datos[i]["Direccion"]= input("ingrese la nueva direccion: ")
+                    print("se guardo con exito")
+                    print("/////////////////////////////////////////////////////////////")
+                elif opc=="4":
+                    datos[i]["Contacto"]= input("ingrese el nuevo telefono: ")
+                    print("se guardo con exito")
+                    print("/////////////////////////////////////////////////////////////")
+                elif opc=="0":
+                    break
+            break
+    return datos
