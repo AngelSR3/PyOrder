@@ -350,6 +350,6 @@ def mostrar_ventas():
             except Exception as e:
                 log_error(e, "../Errores.txt")
         print("/////////////////////////////////////////////////////////////")
-        print(obtener_usuario_mas_compras(usuarios))
+        print("Usuario con mas compras: ", obtener_usuario_mas_compras(usuarios))
     except Exception as e:
         log_error(e, "../Errores.txt")
